@@ -4,9 +4,9 @@ The following walkthrough was made for a [Networked Curator workshop given at th
 
 This lesson is derived from a [similar Palladio workshop given at the Frick Digital Art History Lab, April 8th, 2016][amsterdam_palladio].
 
-[amserdam_palladio]: https://matthewlincoln.net/2016/04/07/exploring-depictions-of-amsterdam-with-palladio.html
+[amsterdam_palladio]: https://matthewlincoln.net/2016/04/07/exploring-depictions-of-amsterdam-with-palladio.html
 
-# Introduction
+## Introduction
 
 Some tips from [Miriam Posner](http://miriamposner.com/blog/getting-started-with-palladio/) before we begin:
 
@@ -27,12 +27,12 @@ Another tip from me: while Palladio _mostly_ works with Firefox, some options li
 
 [Download the CSV file that we'll work with.](https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv)
 
-These data describe a little over 4,700 sales by the fine art dealer M. Knoedler & Co. between roughly 1870-1970, as documented in their stockbooks data as encoded by the Getty Provenance Index.
+These data describe a little over 4,700 sales by the fine art dealer M. Knoedler & Co. between roughly 1870-1970, as documented in their stockbooks data as encoded by the [Getty Provenance Index](http://www.getty.edu/research/tools/provenance/search.html).
 In order to keep this introductory lesson straightforward, **this is only a tiny slice of the full Knoedler data**, which cover over 40,000 entries.
 The data in `nyc_knoedler.csv` covers only those cases in which:
 
-1. The transactions were recorded in the Knoedler stockbooks (they didn't always keep good records!)
-2. Artworks for which we have the original purchase _and_ sale dates and prices.
+1. The transactions were _actually recorded_ in the Knoedler stockbooks (they didn't always keep good records!)
+2. The records contain original purchase _and_ sale dates and prices.
 3. The buyer has a known street address located in Manhattan or Brooklyn (i.e. if our only location info says "New York, NY", it is not included in this subset because it doesn't contain street-level precision. **Note: we haven't yet finished entering all the known addresses - bear this in mind when interpreting visualizations!**)
 
 I've also enhanced these data with some important modifications that aren't included in the original Knoedler data:
@@ -50,7 +50,7 @@ field         | description
 --------------|-------------------------------------------------------------------------
 `title`   | Title of the work (if recorded)
 `artists` | Creator(s) of the artwork (if recorded)
-`artists_nationality` | Creator(s) nationalities (input by modern editors) 
+`artist_nationality` | Creator(s) nationalities (input by modern editors) 
 `genre`  | Genre of the work (input by modern editors)
 `object_type`  | e.g. `Painting`, `Drawing`, `Sculpture` (input by modern editors)
 `height` | Height in inches (if recorded)
@@ -97,9 +97,9 @@ Now we can start "faceting", or filtering the data based on different variables.
 
 Click on the red trash basket icon on the lower right to dismiss the facet filter.
 
-We can also use the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `purchase_date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view. Note that you can also chose a "group by" variable in the timeline, which will color the histogram based on that variable.
+We can also click on the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `purchase_date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view. Note that you can also chose a "group by" variable in the timeline, which will color the histogram based on that variable.
 
-Palladio also understands _timespans_, or activities that have a start and end date. After dismissing the Timeline filter with the red trash basket button, click on "Timespan". We'll need to tell it the correct start date and end date columns. Now in addition to getting a map visualization, we'll also be able to visualize the tempo at which Knoedler rotate their stock. You can experiment with different timespan visualization techniques by changing the "Layout" menu.
+Palladio also understands _timespans_, or activities that have a start and end date. After dismissing the Timeline filter with the red trash basket button, click on "Timespan". We'll need to tell it the correct start date (`purchase_date`) and end date (`sale_date`) columns. Now in addition to getting a map visualization, we'll also be able to visualize the tempo at which Knoedler rotated their stock. You can experiment with different timespan visualization techniques by changing the "Layout" menu.
 
 Did the geographic distribution of Knoedler's buyers change over the life of the firm? How? In what ways did they change the pace at which they sold artworks? Are there any gaps in the visualizations that might point to data entry problems?
 
@@ -120,4 +120,4 @@ Although you cannot export interactive visualizations from Palladio, you can sav
 
 With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amserdam_palladio]
 
-While a great tool for initial explorations, Palladio has some pretty strict limits. Try <plot.ly> if you are looking for more fine-grained control over your charts, or need to ask more complicated questions.
+While a great tool for initial explorations, Palladio has some pretty strict limits. Try <https://plot.ly> if you are looking for more fine-grained control over your charts, or need to ask more complicated questions.
