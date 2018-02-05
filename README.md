@@ -38,7 +38,7 @@ The data in `nyc_knoedler.csv` covers only those cases in which:
 I've also enhanced these data with some important modifications that aren't included in the original Knoedler data:
 
 1. Imputed values for partially-recorded purchase and sale dates, based on location in the archive.
-2. To allow comparison of prices over time, I've converted monetary amounts from foreign currencies into USD, and deflated to a dollar value pinned to 1900.
+2. To allow comparison of prices over time, we've converted monetary amounts from foreign currencies into USD, and deflated to a dollar value pinned to 1900. (This work masterminded by Sandra van Ginhoven)
 3. Generated lat/lon coordinates for street addresses using the [DSK geocoding service](https://cran.r-project.org/web/packages/ggmap/).
 
 For the sake of simplicity, I've drastically trimmed the number of variables for each of these transactions.
