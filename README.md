@@ -118,6 +118,6 @@ Although you cannot export interactive visualizations from Palladio, you can sav
 
 ## Work on your own
 
-With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amserdam_palladio]
+With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amsterdam_palladio]
 
 While a great tool for initial explorations, Palladio has some pretty strict limits. Try <https://plot.ly> if you are looking for more fine-grained control over your charts, or need to ask more complicated questions.
