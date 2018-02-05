@@ -2,7 +2,9 @@
 
 The following walkthrough was made for a [Networked Curator workshop given at the Getty Research Institute, February 8th, 2018](http://networkedcurator.doingdh.org/).
 
-This lesson is derived from a [similar Palladio workshop given at the Frick Digital Art History Lab, April 8th, 2016](https://matthewlincoln.net/2016/04/07/exploring-depictions-of-amsterdam-with-palladio.html).
+This lesson is derived from a [similar Palladio workshop given at the Frick Digital Art History Lab, April 8th, 2016][amsterdam_palladio].
+
+[amserdam_palladio]: https://matthewlincoln.net/2016/04/07/exploring-depictions-of-amsterdam-with-palladio.html
 
 # Introduction
 
@@ -19,99 +21,96 @@ and slow!
 >
 >-   Clicking on the **Palladio** logo will bring you to the Palladio homepage, but it won't erase your work.
 
+Another tip from me: while Palladio _mostly_ works with Firefox, some options like tooltips are a bit buggy in that browser. You'll find more consistent results using Chrome or Safari.
+
 ## Download the workshop data
 
-[Download the set of CSV files that we'll work with.](https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv)
+[Download the CSV file that we'll work with.](https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv)
 
-These data describe almost 1,000 objects from the Rijksmuseum made between 1500 and 1750 that depict some location in the city of Amsterdam, as labeled by curatorial teams at the Rijksmuseum.
-There are three different CSV files here, but we'll start out working with just two:
+These data describe a litte over 4,700 sales by the fine art dealer M. Knoedler & Co. between roughtly 1870-1970, as documented in their stockbooks data as encoded by the Getty Provenance Index.
+In order to keep this introductory lesson straightforward, **this is only a tiny slice of the full Knoedler data**, which cover over 40,000 entries.
+The data in `nyc_knoedler.csv` covers only those cases in which:
 
-1. `object_attributes.csv` - This lists, you guessed it, object attributes! This is a simplified version of the fields that are available from the original Rijksmuseum data, and has these columns
+1. The transactions were recorded in the Knoedler stockbooks (they didn't always keep good records!)
+2. Artworks for which we have the original purchase _and_ sale dates and prices.
+3. The buyer has a known street address located in Manhattan or Brooklyn (i.e. if our only location info says "New York, NY", it is not included in this subset because it doesn't contain street-level precision. **Note: we haven't yet finished entering all the known addresses - bear this in mind when interpreting visualizations!**)
 
-field            | description
------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`object_id`      | A unique ID number
-`title`          | The artwork title (in Dutch)
-`date_start`     | The earliest date given to the object
-`date_end`       | The latest date given to the object
-`object_type`    | Kind of object, e.g. "print", "painting", "drawing". I have translated these terms, and also consolidated a few hyper-specific ones (e.g. "family medal" vs. "history medal")
-`primary_artist` | The primary creator associated with this object. Note that in the original dataset, many objets have more than one creator (e.g. a printmaker and a publisher), though the Rijksmuseum also selects one artist as the primary. For simplicity's sake, we will use the primary artist.
-`object_url`     | A link to the object's page at the Rijksmuseum
-`thumb_img`      | A link to a small image of the object, when one is available
+I've also enhanced these data with some important modifications that aren't included in the original Knoedler data:
 
-2. `object_locations.csv` - Each object has at least one (and sometimes more!) locations that it depicts. I hand-coded this table based on the depicted location names provided by the Rijksmuseum
+1. Imputed values for partially-recorded purchase and sale dates, based on location in the archive.
+2. To allow comparison of prices over time, I've converted monetary amounts from foreign currencies into USD, and deflated to a dollar value pinned to 1900.
+3. Generated lat/lon coordinates for street addresses using the [DSK geocoding service](https://cran.r-project.org/web/packages/ggmap/).
+
+For the sake of simplicity, I've drastically trimmed the number of variables for each of these transactions.
+This means some complexities that _are_ represented in the Knoelder data, like transactions of multiple objects, as well as joint purchases by Knoedler and another dealer, are flattened here.
+
+The columns in this table include:
 
 field         | description
 --------------|-------------------------------------------------------------------------
-`object_id`   | A unique ID number (matches with `object_id` in `object_attributes.csv`)
-`place_name`  | Place name provided by the Rijksmuseum
-`place_type`  | One of 12 different place types (e.g. "gate", "church", "commerce")
-`coordinates` | A latitude/longitude pair
+`title`   | Title of the work (if recorded)
+`artists` | Creator(s) of the artwork (if recorded)
+`artists_nationality` | Creator(s) nationalites(input by modern editors) 
+`genre`  | Genre of the work (input by modern editors)
+`object_type`  | e.g. `Painting`, `Drawing`, `Sculpture` (input by modern editors)
+`height` | Height in inches (if recorded)
+`width`   | Width in inches (if recorded)
+`area`  | Area in square inches (if recorded)
+`seller`  | Name of seller (numeric ID if anonymous/unknown)
+`seller_type` | e.g. `Dealer`, `Museum`, `Artist`, `Collector`
+`buyer` | Name of buyer (numeric ID if anonymous/unknown)
+`buyer_type` | e.g. `Dealer`, `Museum`, `Artist`, `Collector`
+`buyer_address`   | Buyer address
+`coordinates`  | Coordinates in the format `lat,lon`
+`purchase_date`  | Date object brought into Knoedler stock in the format `YYYY-MM-DD`
+`sale_date` | Date object sold out of Knoedler stock in the format `YYYY-MM-DD`
+`purchase_price`   | Price Knoedler paid to buy the object (in 1900 USD)
+`sale_price`  |  Price Knoedler recieved for selling the object (in 1900 USD)
 
+## Loading our data
 
-## Loading our first dataset
+Navigate to <http://palladio.designhumanities.org> and click on the "Start" button.
 
-Navigate to <http://palladio.designhumanities.org> and click on the "Start" button at the upper left corner.
+Drag the file `nyc_knoedler.csv` into the window where it says "Load .csv or spreadsheet". You should see text fill the box. Click load.
 
-Drag the file `object_attributes.csv` into the window where it says "Load .csv or spreadsheet". You should see text fill the box. Click load.
-
-You should now see the data loaded into Palladio. Let's call our project name "Depictions of Amsterdam", and the table name "Rijksmuseum objects".
+You should now see the data loaded into Palladio. Let's call our project name "Knoedler", and the table name "New York Sales".
 
 ## Checking our data
 
-The data view shows the fields (i.e. columns) from our spreadsheet, and also shows what type of variable Palladio has guessed our data are supposed to be. We've got a few text fields here, as well as date fields, and a special "url" field (we'll see what that does in a moment!)
+The data view shows the fields (i.e. columns) from our spreadsheet, and also shows what type of variable Palladio has guessed our data are supposed to be. We've got a few text fields here, as well as date fields, and a coordinates field.
 
 Palladio tries to check for some simple irregularities in our data, like odd characters, and it's highlighted those fields with a red dot. We can ignore these dots for now, as all those characters (like commas or dashes in the _title_ field) are there on purpose.
 
-We also have the option to set the Data Type of this field. Normally Palladio will recognize this automatically, but in some cases, we'll find that we need to manually set a field to "Date" when Palladio thinks it is only a "Number"
+We also have the option to set the Data Type of this field. Normally Palladio will recognize this automatically, but in some cases, we'll find that we need to manually set a field to "Date" when Palladio thinks it is only a "Number".
 
-## Create a gallery
+## Create a map
 
-Time to start visualizing this collection!
+Now click on the "Map" button. Palladio starts you out with a plain coastline basemap. Before adding our own data, we can enhance this basemap by adding more "Tiles". Click on "New Layer", then click on the "Tiles" tab. You can see the different tile types to add to the basemap - let's add "Streets" by clicking on the "Streets" button. In the "Name" field above, type "Streets", then click "Add Layer". You should now see borders and cities showing up on your basemap.
 
-Click on the "Gallery" tab at the top of the screen.
-This view does what it says on the label - makes a gallery of our objects so we can see all of them while we try different types of filtering and sorting.
+Now it's time to add our own data. Click on "New Layer" again, and click the "Data" tab. We'll be adding "Points" (the default option). Click on "Places" and select `coordinates` (the only option). For the tooltip label (what we see when we roll over the points), let's start with `buyer_address`. Check the box to size points, and do so according to `number of New York Sales`. Finish by clicking "Add Layer", and then click on the hamburger button (the three small lines in the upper right corner) to minimize the layer configuration box.
 
-First we need to establish our settings:
+You should see a few dots appearing over New York City. In the upper left corner, underneath the zoom in/out buttons, there's a button called "Zoom to data" - click on this to automatically zoom in so that our data points fill the screen.
 
-The settings box shows us each of the elements of the gallery that we can modify, with a menu to assign fields from our data. Let's set it up like so:
+Now we can start "faceting", or filtering the data based on different variables. Click on the "Facet" button on the lower left corner, and in the lower right corner, use the "Dimensions" menu to select which variable we want to facet by. Try `buyer` first. Palladio will count up how many sales for each buyer are in the dataset, and we can click on a single type to filter the gallery to just display those. You'll notice some buyers show up with multiple addresses. 
 
-- **Title**: `title`
-- **Subtitle**: `primary_maker`
-- **Text**: `object_type`
-- **Link**: `object_url`
-- **Image URL**: `thumb_url`
-- **Sort by**: `start_date`
+**You also may notice that some addresses haven't been properly geocoded by the automated service. Vsiualizing data like this can be a great way to catch data errors that are hard to spot in a spreadsheet.**
 
-After assigning these fields, click on the hamburger button (those three stacked lines) in the upper right to minimize the settings window.
+Click on the red trash basket icon on the lower right to dismiss the facet filter.
 
-Now we can start "faceting", or filtering the data based on different variables. Click on the "Facet" button on the lower left corner, and in the lower right corner, use the "Dimensions" menu to select which variable we want to facet by. Try `object_type` first. Palladio will count up how many of each object type are in this dataset, and we can click on a single type to filter the gallery to just display those. Click on the red trash basket icon on the lower right to dismiss the facet filter.
+We can also use the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `purchase_date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view. Note that you can also chose a "group by" variable in the timeline, which will color the histogram based on that variable.
 
-We can also use the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view.
+Palladio also understands _timespans_, or activities that have a start and end date. After dismissing the Timeline filter with the red trash basket button, click on "Timespan". We'll need to tell it the correct start date and end date columns. Now in addition to getting a map visualization, we'll also be able to visualize the tempo at which Knoelder rotate their stock. You can experiment with different timespan visualization techniques by changing the "Layout" menu.
 
-## Add geo-coordinates and create a map
-
-In order to map these objects, we'll need to add geo-coordinates to them. Palladio won't figure out coordinates from city names by itself, so you will already need to have created these coordinates yourself.
-
-Navigate back to the "Data" menu, and click on the `object_id` field. We can extend these data by uploading a new CSV. Click on "Add a new table" and then drag the `object_locaiton` table into the box, and click "Load". Palladio will find matches between `object_id` in the `object_attributes` table, and the `object_id` column in the `object_location` table, and copy the data accordingly.
-
-Now click on the "Map" button. We'll be prompted to add a data layer. Click on "New Layer". We'll be adding "Points" (the default option). Click on "Places" and select `object_id` (the only option - remember, this is the variable to which we attached our coordinates). For the tooltip label (what we see when we roll over the points), let's start with `place_name`. Check the box to size points, and do so according to `number of Rijksmuseum objects`
-
-Zoom in until Amsterdam fits comfortably on your screen. Just like with the gallery view, we can also facet and use timelines in the map view. Let's try faceting by `place_type`, and then by `primary_maker`. Now try filtering by using the timeline. Note that you can also chose a "group by" variable in the timeline, which will color the histogram based on that variable.
-
-Try scrolling through the timeline to see which locations were depicted at different times. Which places show up throughout this period? Are there regions of the city that only begin to be depicted in the late 17th century?
+Did the geographic distribution of Knoedler's buyers change over the life of the firm? How? In what ways did they change the pace at which they sold artworks? Are there any gaps in the visualizations that might point to data entry problems?
 
 ## Create networks
 
-One question I was interested in exploring with these data as which places tended to be depicted together. To do this meant reorganizing the data a bit, so that instead of having one row per object, we would have one row per _pair of locations depicted together in an artwork_.
+Our research project is interested in how Knoedler acted as a conduit for the art market, funneling old master paintings into American collections. We can use network visualizations to get a sense of what buyers were connected to what sellers, and how the shape of the "Knoedler network" chagned over time. (As always, though, we need to bear in mind that this slice of the dataset _just_ contains their New York buyers!)
 
-Because we are loading an entirely new base dataset, we'll have to start a new Palladio project. First, let's save our work by clicking the "Download" button at the upper right. This will download a .json file to your computer. Next time you start up Palladio, you will have the option to input this json file to restore both your data as well as the visuals that you configured from it.
+Click on the "Graph" option. We need to specify the variables for the source and target dimension - use `seller` and `buyer`, respectively.
+Don't be surprised if your computer suddenly slows down for a few seconds: this is a very large network! It won't be helpful for us to try and look at the whole thing at once, so before continuing, click on "Timeline" and select just a few years of relationships to show at one time.
 
-Use your browser reload button to restart Palladio, and upload `paired_locations.csv`. Check the fields: you see some object attributes, and then the final 6 fields have to do with the locations depicted.
-
-Click on the "Graph" option. We need to specify the variables for the source and target dimension - use `site_one_name` and `site_two_name`, respectively, and check the "Size nodes" box. Like the other data views, we can use the facet and timeline options to filter the visualization.
-
-Like we did with the map, see if you can find any patterns when filtering by time. Also, try faceting by `primary_maker` and see the clusters of places depicted by different artists. Can you figure out why Anna Folkema's prints visualize the way they do? This is a great opportunity to set up your gallery view again, in order to get back to the images themselves.
+Like we did with the map, see if you can find any patterns when filtering by time. You can also try graphing other types of entity relationships. For example, try setting the "Source" field to `artists` or `artist_nationality` while keeping the "Target" field set to `buyer`. This can give an impression of how different buyers may have targeted their purchases - or how Knoedler may have steered their assets to different parts of the market.
 
 ## Saving your visualizations
 
@@ -119,13 +118,6 @@ Although you cannot export interactive visualizations from Palladio, you can sav
 
 ## Work on your own
 
-Here are a few additional challenges that you can try out independently:
+With the right dataset, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amserdam_palladio]
 
-1. You can use Palladio to plot networks onto maps, as well. Using the `paired_locations` data, try adding points to the map using the "point to point" layer type.
-1. I've included two "extra credit" datasets to try out: `cushman_collection.csv` is a dataset of geo-referenced photographs used by [Miriam Posner in her own Palladio tutorial](http://miriamposner.com/blog/getting-started-with-palladio/). Try your hand at uploading and visualizing the data. Check Miriam's tutorial if you need some ideas for how to explore the dataset. For example:
-  - Create a gallery of the photographs
-  - Map the photographs, and then filter that map based on the photograph date.
-1. `europop.csv` and `euro_city_coords.csv` list the historic populations of European urban centers between 1500 and 1800.
-  - Practice joining these tables. You'll need to load `europop.csv` first, and then add `euro_city_coords.csv` to the project based on the city name column.
-  - Try to map these data, and then filter based on the year of the data.
-  - This dataset is based on a scanned text and automatic geo-referencing, **so you may probably find some mis-placed cities**. Try faceting the map by `Region` and make note of any misplaced dots by reporting them as issues here: <https://github.com/mdlincoln/europop/issues>
+While a great tool for initial explorations, Palladio has some pretty strict limits. Try <plot.ly> if you are looking for more fine-grained control over your charts, or need to ask more complicated questions.
