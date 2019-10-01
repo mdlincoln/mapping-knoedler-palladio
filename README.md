@@ -69,7 +69,7 @@ field         | description
 
 ## Loading our data
 
-Navigate to <http://palladio.designhumanities.org> and click on the "Start" button.
+Navigate to <http://hdlab.stanford.edu/palladio/> and click on the "Start" button.
 
 Drag the file `nyc_knoedler.csv` into the window where it says "Load .csv or spreadsheet". You should see text fill the box. Click load.
 
