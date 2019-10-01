@@ -28,6 +28,13 @@ Another tip from me: while Palladio _mostly_ works with Firefox, some options li
 [Download the CSV file that we'll work with.](https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv)
 
 These data describe a little over 4,700 sales by the fine art dealer M. Knoedler & Co. between roughly 1870-1970, as documented in their stockbooks data as encoded by the [Getty Provenance Index](http://www.getty.edu/research/tools/provenance/search.html).
+
+For more background on the Knoedler archive at the Getty, and the data project to encode the stockbooks from within that collection, see:
+
+- <http://www.getty.edu/research/special_collections/notable/knoedler.html>
+- <http://blogs.getty.edu/iris/database-of-knoedler-gallery-stock-books-now-online/>
+
+
 In order to keep this introductory lesson straightforward, **this is only a tiny slice of the full Knoedler data**, which cover over 40,000 entries.
 The data in `nyc_knoedler.csv` covers only those cases in which:
 
