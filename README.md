@@ -131,12 +131,25 @@ Finally, you may notice "Knoedler's" is in this network... but if this is just a
 
 ![From the Getty Research Institute's description of the Knoedler Gallery Archive http://www.getty.edu/research/special_collections/notable/knoedler.html](img/knoedler_text.png)
 
+Because of their many branches, Kneodler often makes entries that appear as though it's buying from itself! Depending on what kinds of questions we are asking, we might end up filtering out these sales from our data... or choose to inspect those records even more closely. Use a "Facet" by `seller` to try and show all sales _except_ the one where "Knoedler's" is the seller.
+
 ## Saving your visualizations
 
 Although you cannot export interactive visualizations from Palladio, you can save static images based on your representations. In the Settings menus for any of the visualizations, click the "Download" button to generate an .svg image of your visualization.
 
 ## Work on your own
 
-With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amsterdam_palladio]
+With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. To experiment with these possibilities, [try out the Amsterdam depictions dataset from an earlier version of this workshop.][amsterdam_palladio]. This dataset includes links to images, which will let you try out Palladio's "Gallery" view, which can be very useful for examining subsets of your data and bringing your analyses back to the artwork.
 
-While a great tool for initial explorations, Palladio has some pretty strict limits. Try <https://plot.ly> if you are looking for more fine-grained control over your charts, or need to ask more complicated questions.
+Finally, remember that Palladio is a tool expressly designed for initial data explorations. Stanford's Humanities+Design lab specifically intends it to be the starting point of a project, after which you move into more specialized tools. Palladio has some pretty strict limits:
+
+- It can only process a limited amount of data. If you go much over 10,000 rows, the program will become unusably slow.
+- Composing very complicated queries to filter and aggregate your data can't be done in Palladio
+- The visual minimalism is very good for prototyping visualizations, but if you need to use color then you'll need to expand into new software.
+
+Options for further dataset visualizations include:
+
+- plot.ly
+- Tableau
+- QGIS
+- R and ggplot
