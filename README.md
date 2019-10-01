@@ -71,8 +71,8 @@ field         | description
 `coordinates`  | Coordinates in the format `lat,lon`
 `purchase_date`  | Date object brought into Knoedler stock in the format `YYYY-MM-DD`
 `sale_date` | Date object sold out of Knoedler stock in the format `YYYY-MM-DD`
-`purchase_price`   | Price Knoedler paid to buy the object (in 1900 USD)
-`sale_price`  |  Price Knoedler received for selling the object (in 1900 USD)
+`purchase_price`   | Price Knoedler paid to buy the object (normalized to 1900 USD)
+`sale_price`  |  Price Knoedler received for selling the object (normalized to 1900 USD)
 
 ## Loading our data
 
@@ -94,9 +94,15 @@ We also have the option to set the Data Type of this field. Normally Palladio wi
 
 Now click on the "Map" button. Palladio starts you out with a plain coastline base map. Before adding our own data, we can enhance this base map by adding more "Tiles". Click on "New Layer", then click on the "Tiles" tab. You can see the different tile types to add to the base map - let's add "Streets" by clicking on the "Streets" button. In the "Name" field above, type "Streets", then click "Add Layer". You should now see borders and cities showing up on your base map.
 
-Now it's time to add our own data. Click on "New Layer" again, and click the "Data" tab. We'll be adding "Points" (the default option). Click on "Places" and select `coordinates` (the only option). For the tooltip label (what we see when we roll over the points), let's start with `buyer_address`. Check the box to size points, and do so according to `number of New York Sales`. Finish by clicking "Add Layer", and then click on the hamburger button (the three small lines in the upper right corner) to minimize the layer configuration box.
+Now it's time to add our own data. Click on "New Layer" again, and click the "Data" tab. We'll be adding "Points" (the default option). Under the name, type "Sales Locations". Click on "Places" and select `coordinates` (the only option, since this is the only data in our table that is formatted as a pair of coordinates). For the tooltip label (what we see when we roll over the points), let's start with `buyer_address`. 
 
-You should see a few dots appearing over New York City. In the upper left corner, underneath the zoom in/out buttons, there's a button called "Zoom to data" - click on this to automatically zoom in so that our data points fill the screen.
+Check the box to size points, and do so according to `number of New York Sales`, which will make points bigger when they match more rows in our table. Finish by clicking "Add Layer", and then click on the hamburger button (the three small lines in the upper right corner) to minimize the layer configuration box.
+
+You should see a few dots appearing over New York City. In the upper left corner, underneath the zoom in/out buttons, there's a small button with a few nested squares, called "Zoom to data" - click on this to automatically zoom in so that our data points fill the screen.
+
+Roll over the points to inspect the addresses matched to each one. Look for the particularly huge points - what do you notice about the addresses? What could this indicate about the geocoding process?
+
+Click on the hamburger icon, and then click on the pencil/edit icon next to the "Sales Locations" layer. Experiment with changing the tooltip to display the buyers instead, or one of the other variables in our dataset.
 
 Now we can start "faceting", or filtering the data based on different variables. Click on the "Facet" button on the lower left corner, and in the lower right corner, use the "Dimensions" menu to select which variable we want to facet by. Try `buyer` first. Palladio will count up how many sales for each buyer are in the data set, and we can click on a single type to filter the gallery to just display those. You'll notice some buyers show up with multiple addresses. 
 
@@ -104,7 +110,9 @@ Now we can start "faceting", or filtering the data based on different variables.
 
 Click on the red trash basket icon on the lower right to dismiss the facet filter.
 
-We can also click on the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `purchase_date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view. Note that you can also chose a "group by" variable in the timeline, which will color the histogram based on that variable.
+We can also click on the "Timeline" filter to visualize and filter based on date. Palladio should already have recognized the `purchase_date` column and created a timeline for us. You can drag and select a particular range if you like, and then drag that range around to see which different objects show up in our view.
+
+By default, the height of the bars is based on the number of rows in the table at that date. But we can change it to instead reflect the sum of some numeric variable like purchase price, sale price, or size of the artworks. Experiment with this and see how these trends compare to what we see in the plain numbers of works that knoedler sold. Leaving the current timeline open, click on the "Timeline" button again to add a second one and try a different height metric to compare.
 
 Palladio also understands _timespans_, or activities that have a start and end date. After dismissing the Timeline filter with the red trash basket button, click on "Timespan". We'll need to tell it the correct start date (`purchase_date`) and end date (`sale_date`) columns. Now in addition to getting a map visualization, we'll also be able to visualize the tempo at which Knoedler rotated their stock. You can experiment with different timespan visualization techniques by changing the "Layout" menu.
 
@@ -118,6 +126,10 @@ Click on the "Graph" option. We need to specify the variables for the source and
 Don't be surprised if your computer suddenly slows down for a few seconds: this is a very large network! It won't be helpful for us to try and look at the whole thing at once, so before continuing, click on "Timeline" and select just a few years of relationships to show at one time.
 
 Like we did with the map, see if you can find any patterns when filtering by time. You can also try graphing other types of entity relationships. For example, try setting the "Source" field to `artists` or `artist_nationality` while keeping the "Target" field set to `buyer`. This can give an impression of how different buyers may have targeted their purchases - or how Knoedler may have steered their assets to different parts of the market.
+
+Finally, you may notice "Knoedler's" is in this network... but if this is just a network of people/institutions Knoedler _bought from_ and then _sold to_, why would they appear in the network? The answer can only be found by understanding the archival context: 
+
+![From the Getty Research Institute's description of the Knoedler Gallery Archive http://www.getty.edu/research/special_collections/notable/knoedler.html](img/knoedler_text.png)
 
 ## Saving your visualizations
 
