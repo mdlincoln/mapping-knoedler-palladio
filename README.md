@@ -25,7 +25,7 @@ Another tip from me: while Palladio _mostly_ works with Firefox, some options li
 
 ## Download the workshop data
 
-[Download the CSV file that we'll work with.](https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv)
+<a href="https://matthewlincoln.net/mapping-knoedler-palladio/nyc_knoedler.csv" download="nyc_knoedler.csv">Download the CSV file that we'll work with.</a>
 
 These data describe a little over 4,700 sales by the fine art dealer M. Knoedler & Co. between roughly 1870-1970, as documented in their stockbooks data as encoded by the [Getty Provenance Index](http://www.getty.edu/research/tools/provenance/search.html).
 
@@ -53,26 +53,26 @@ This means some complexities that _are_ represented in the Knoedler data, like t
 
 The columns in this table include:
 
-field         | description
---------------|-------------------------------------------------------------------------
-`title`   | Title of the work (if recorded)
-`artists` | Creator(s) of the artwork (if recorded)
-`artist_nationality` | Creator(s) nationalities (input by modern editors) 
-`genre`  | Genre of the work (input by modern editors)
-`object_type`  | e.g. `Painting`, `Drawing`, `Sculpture` (input by modern editors)
-`height` | Height in inches (if recorded)
-`width`   | Width in inches (if recorded)
-`area`  | Area in square inches (if recorded)
-`seller`  | Name of seller (numeric ID if anonymous/unknown)
-`seller_type` | e.g. `Dealer`, `Museum`, `Artist`, `Collector`
-`buyer` | Name of buyer (numeric ID if anonymous/unknown)
-`buyer_type` | e.g. `Dealer`, `Museum`, `Artist`, `Collector`
-`buyer_address`   | Buyer address
-`coordinates`  | Coordinates in the format `lat,lon`
-`purchase_date`  | Date object brought into Knoedler stock in the format `YYYY-MM-DD`
-`sale_date` | Date object sold out of Knoedler stock in the format `YYYY-MM-DD`
-`purchase_price`   | Price Knoedler paid to buy the object (normalized to 1900 USD)
-`sale_price`  |  Price Knoedler received for selling the object (normalized to 1900 USD)
+| field                | description                                                             |
+| -------------------- | ----------------------------------------------------------------------- |
+| `title`              | Title of the work (if recorded)                                         |
+| `artists`            | Creator(s) of the artwork (if recorded)                                 |
+| `artist_nationality` | Creator(s) nationalities (input by modern editors)                      |
+| `genre`              | Genre of the work (input by modern editors)                             |
+| `object_type`        | e.g. `Painting`, `Drawing`, `Sculpture` (input by modern editors)       |
+| `height`             | Height in inches (if recorded)                                          |
+| `width`              | Width in inches (if recorded)                                           |
+| `area`               | Area in square inches (if recorded)                                     |
+| `seller`             | Name of seller (numeric ID if anonymous/unknown)                        |
+| `seller_type`        | e.g. `Dealer`, `Museum`, `Artist`, `Collector`                          |
+| `buyer`              | Name of buyer (numeric ID if anonymous/unknown)                         |
+| `buyer_type`         | e.g. `Dealer`, `Museum`, `Artist`, `Collector`                          |
+| `buyer_address`      | Buyer address                                                           |
+| `coordinates`        | Coordinates in the format `lat,lon`                                     |
+| `purchase_date`      | Date object brought into Knoedler stock in the format `YYYY-MM-DD`      |
+| `sale_date`          | Date object sold out of Knoedler stock in the format `YYYY-MM-DD`       |
+| `purchase_price`     | Price Knoedler paid to buy the object (normalized to 1900 USD)          |
+| `sale_price`         | Price Knoedler received for selling the object (normalized to 1900 USD) |
 
 ## Loading our data
 
@@ -94,7 +94,7 @@ We also have the option to set the Data Type of this field. Normally Palladio wi
 
 Now click on the "Map" button. Palladio starts you out with a plain coastline base map. Before adding our own data, we can enhance this base map by adding more "Tiles". Click on "New Layer", then click on the "Tiles" tab. You can see the different tile types to add to the base map - let's add "Streets" by clicking on the "Streets" button. In the "Name" field above, type "Streets", then click "Add Layer". You should now see borders and cities showing up on your base map.
 
-Now it's time to add our own data. Click on "New Layer" again, and click the "Data" tab. We'll be adding "Points" (the default option). Under the name, type "Sales Locations". Click on "Places" and select `coordinates` (the only option, since this is the only data in our table that is formatted as a pair of coordinates). For the tooltip label (what we see when we roll over the points), let's start with `buyer_address`. 
+Now it's time to add our own data. Click on "New Layer" again, and click the "Data" tab. We'll be adding "Points" (the default option). Under the name, type "Sales Locations". Click on "Places" and select `coordinates` (the only option, since this is the only data in our table that is formatted as a pair of coordinates). For the tooltip label (what we see when we roll over the points), let's start with `buyer_address`.
 
 Check the box to size points, and do so according to `number of New York Sales`, which will make points bigger when they match more rows in our table. Finish by clicking "Add Layer", and then click on the hamburger button (the three small lines in the upper right corner) to minimize the layer configuration box.
 
@@ -104,7 +104,7 @@ Roll over the points to inspect the addresses matched to each one. Look for the 
 
 Click on the hamburger icon, and then click on the pencil/edit icon next to the "Sales Locations" layer. Experiment with changing the tooltip to display the buyers instead, or one of the other variables in our dataset.
 
-Now we can start "faceting", or filtering the data based on different variables. Click on the "Facet" button on the lower left corner, and in the lower right corner, use the "Dimensions" menu to select which variable we want to facet by. Try `buyer` first. Palladio will count up how many sales for each buyer are in the data set, and we can click on a single type to filter the gallery to just display those. You'll notice some buyers show up with multiple addresses. 
+Now we can start "faceting", or filtering the data based on different variables. Click on the "Facet" button on the lower left corner, and in the lower right corner, use the "Dimensions" menu to select which variable we want to facet by. Try `buyer` first. Palladio will count up how many sales for each buyer are in the data set, and we can click on a single type to filter the gallery to just display those. You'll notice some buyers show up with multiple addresses.
 
 **You also may notice that some addresses haven't been properly geocoded by the automated service. Vsiualizing data like this can be a great way to catch data errors that are hard to spot in a spreadsheet.**
 
@@ -127,7 +127,7 @@ Don't be surprised if your computer suddenly slows down for a few seconds: this 
 
 Like we did with the map, see if you can find any patterns when filtering by time. You can also try graphing other types of entity relationships. For example, try setting the "Source" field to `artists` or `artist_nationality` while keeping the "Target" field set to `buyer`. This can give an impression of how different buyers may have targeted their purchases - or how Knoedler may have steered their assets to different parts of the market.
 
-Finally, you may notice "Knoedler's" is in this network... but if this is just a network of people/institutions Knoedler _bought from_ and then _sold to_, why would they appear in the network? The answer can only be found by understanding the archival context: 
+Finally, you may notice "Knoedler's" is in this network... but if this is just a network of people/institutions Knoedler _bought from_ and then _sold to_, why would they appear in the network? The answer can only be found by understanding the archival context:
 
 ![From the Getty Research Institute's description of the Knoedler Gallery Archive http://www.getty.edu/research/special_collections/notable/knoedler.html](img/knoedler_text.png)
 
