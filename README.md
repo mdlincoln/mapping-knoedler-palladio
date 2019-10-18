@@ -35,7 +35,7 @@ For more background on the Knoedler archive at the Getty, and the data project t
 - <http://blogs.getty.edu/iris/database-of-knoedler-gallery-stock-books-now-online/>
 
 
-In order to keep this introductory lesson straightforward, **this is only a tiny slice of the full Knoedler data**, which cover over 40,000 entries.
+In order to keep this introductory lesson straightforward, **this is only a tiny slice of the [full Knoedler data**, which cover over 40,000 entries](https://github.com/thegetty/provenance-index-csv/tree/master/knoedler).
 The data in `nyc_knoedler.csv` covers only those cases in which:
 
 1. The transactions were _actually recorded_ in the Knoedler stockbooks (they didn't always keep good records!)
