@@ -35,6 +35,7 @@ nyc_addresses <- geocoded_addresses %>%
   mutate(coordinates = paste(lat, lon, sep = ","))
 
 nyc_knoedler <- example_imputed_k %>%
+  filter(!is.na(buyer_type), !is.na(seller_type)) %>%
   inner_join(nyc_addresses, by = c("sale_buyer_address" = "buy_auth_addr")) %>%
   mutate(
     seller = case_when(
