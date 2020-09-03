@@ -181,7 +181,7 @@ Roll over the points to inspect the addresses matched to each one. Look for the 
 
 Click on the hamburger icon at upper left to re-open the settings box, and then click on the pencil/edit icon next to the "Sales Locations" layer. Experiment with changing the tooltip to display the buyers instead, or one of the other variables in our dataset.
 
-## Filtering by facet
+### Filtering by facet
 
 Following the same process we used to facet the Table view, let's filter our map by facets. Try `buyer` first. Palladio will count up how many sales for each buyer are in the data set. Click on a single entry (like "Hilton, Henry") to filter the gallery to only display those. You'll notice some buyers show up with multiple addresses.
 
@@ -224,6 +224,8 @@ Because of their many branches, Knoedler often makes entries that appear as thou
 
 Although you cannot export interactive visualizations from Palladio, you can save static images based on your representations. In the Settings menus for any of the visualizations, click the "Download" button to generate a .svg image of your visualization.
 
+**Make sure to go back over the first set of reflection questions and add any further observations you had during this exercise about the dataset and what it shows vs. what it omits.**
+
 ## Other data sources and notes
 
 With the right data set, Palladio can also display images, and do some fancy things like overlaying networks onto maps, and join multiple data tables together. Optionally, you can experiment with these possibilities [by using the Amsterdam depictions dataset from an earlier version of this workshop.][amsterdam_palladio]. This dataset includes links to images, which will let you try out Palladio's "Gallery" view, which can be very useful for examining subsets of your data and bringing your analyses back to the artwork.
@@ -233,5 +235,3 @@ Finally, remember that Palladio is a tool expressly designed for initial data ex
 - It can only process a limited amount of data. If you go much over 10,000 rows, the program will become unusably slow.
 - Composing very complicated queries to filter and aggregate your data can't be done in Palladio
 - The visual minimalism is very good for prototyping visualizations, but if you need to use color then you'll need to expand into new software.
-
-**Make sure to go back over the first set of reflection questions and add any further observations you had during this exercise about the dataset and what it shows vs. what it omits.**
