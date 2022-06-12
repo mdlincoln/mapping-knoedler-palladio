@@ -68,4 +68,4 @@ nyc_knoedler <- example_imputed_k %>%
   )
 
 write_csv(nyc_knoedler, path = "nyc_knoedler.csv", na = "")
-
+save(nyc_knoedler, file = "nyc_knoedler.rda")
